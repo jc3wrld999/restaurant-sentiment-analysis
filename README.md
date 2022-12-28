@@ -2,18 +2,44 @@
 
 ![image](https://user-images.githubusercontent.com/61821641/209739057-80aa1790-fee5-4528-9ea2-d18e2f4b21fc.png)
 
-### 데이터 셋 - [맛집 리뷰 정보 크롤링](https://map.kakao.com/)
+- 데이터 크롤링
+    - Kakao 지도 사이트 크롤링
+- 데이터 전처리
+    - 한글 필터링
+    - 긍정(1) 부정(0) 라벨링
+- 데이터 모델링
+    - **TF-IDF**를 사용해서 한글 형태소를 분리하고 토큰화
+    - 한글 댓글 감정분석
+- 결과 출력
+    - 긍정/부정
+
+### 데이터 크롤링 
+
+- [맛집 리뷰 정보 크롤링](https://map.kakao.com/)
 ![image](https://user-images.githubusercontent.com/61821641/209738558-7be6c001-f7d9-4994-ae2b-c9a717481e76.png)
 
 ![image](https://user-images.githubusercontent.com/61821641/209738606-c6712626-c365-4302-80be-0e062db6ba22.png)
 
-### Corpus 분리
+### 데이터 전처리 
 
+- 한글 필터링
+- 긍정(1) 부정(0) 라벨링
+
+| score | review | y |
+| --- | --- | --- |
+| 100 | 맛있었어요콩나물 엄청 좋아해서 많이 먹었는데도 많이 남았어요 조금 아까웠슴 ㅠㅠ남은... | 1 |
+| 100 | 맛있음 신라면도 매워서 못먹는 맵찔이는 비추 덜매운맛과 매운맛만 존재함 | 1 |
+| 40 | 1\. 자리 원하는 곳 못않게 함(단체석이라더니 결국 아니었음...)2. 맛은 sos... | 0 |
+| 100 | 맛있었어요콩나물 엄청 좋아해서 많이 먹었는데도 많이 남았어요 조금 아까웠슴 ㅠㅠ남은... | 1 |
+| 100 | 맛있음 신라면도 매워서 못먹는 맵찔이는 비추 덜매운맛과 매운맛만 존재함 | 1 |
+
+### 데이터 모델링
+- Corpus 분리
 ```python
 ['맛있었어요/Adjective', '콩나물/Noun', '엄청/Adverb', '좋아해서/Adjective', '많이/Adverb', '먹었는데도/Verb', '많이/Adverb', '남았어요/Verb', '조금/Noun', '아까웠/Adjective', '슴/Noun', 'ㅠㅠ/KoreanParticle', '남은건/Verb', '포장/Noun', '도/Josa', '되서/Verb', '너무/Adverb', '좋았습니다/Adjective', '다음/Noun', '엔/Josa', '불고기/Noun', '먹으러/Verb', '가고싶어요/Verb', '너무/Adverb', '맛있게/Adjective', '잘/Verb', '먹었/Verb', '습/Noun', '니당/Verb']
 ```
 
-### 벡터로 변환
+- 토큰화
 ```python
   (0, 687)	1
   (0, 1847)	1
@@ -27,7 +53,6 @@
   (0, 1064)	1
   (0, 12)	1
 ```
-
 ### 긍정 키워드 추출
 ```python
 도/Josa 1.3132392296234547
